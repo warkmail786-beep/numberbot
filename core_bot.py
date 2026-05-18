@@ -199,22 +199,7 @@ def text_handler(message):
     user_id = message.from_user.id
     text = message.text
 
-if text == '💰 BALANCE':
-    balance = get_balance(user_id)
-    bot.send_message(user_id, f'💰 Your Balance: `{balance:.2f}$`')
-
-if text == '📦 STATUS':
-    conn = db_connect()
-    cursor = conn.cursor()
-
-    cursor.execute('''
-    SELECT category, country_flag, country_name, COUNT(*)
-    FROM numbers
-    WHERE status='available'
-    GROUP BY category, country_name
-    ''')
-
-    rows = cursor.fetchall()
+rows = cursor.fetchall()
 conn.close()
 
 if not rows:
@@ -228,41 +213,41 @@ for row in rows:
 
 bot.send_message(user_id, msg)
 
-# =========================
+# ========================
 
-    if text == '📲 GET NUMBER':
-        categories = get_categories()
+if text == '📲 GET NUMBER':
+    categories = get_categories()
 
-        if not categories:
-            bot.send_message(user_id, '❌ No category found')
-            return
+    if not categories:
+        bot.send_message(user_id, '❌ No category found')
+        return
 
-        markup = types.InlineKeyboardMarkup()
+    markup = types.InlineKeyboardMarkup()
 
-        for cat in categories:
-            markup.add(
-                types.InlineKeyboardButton(
-                    text=f'📌 {cat}',
-                    callback_data=f'cat_{cat}'
-                )
+    for cat in categories:
+        markup.add(
+            types.InlineKeyboardButton(
+                text=f'📌 {cat}',
+                callback_data=f'cat_{cat}'
             )
-
-        bot.send_message(
-            user_id,
-            '📌 Select Service',
-            reply_markup=markup
         )
 
-    if text == '👥 REFER':
-        me = bot.get_me()
-        ref_link = f'https://t.me/{me.username}?start={user_id}'
-        bot.send_message(user_id, f'👥 Your Referral Link:\n{ref_link}')
+    bot.send_message(
+        user_id,
+        '📌 Select Service',
+        reply_markup=markup
+    )
 
-    if text == '🛠 SUPPORT':
-        bot.send_message(user_id, '🛠 Contact Admin: @admin')
+elif text == '👥 REFER':
+    me = bot.get_me()
+    ref_link = f'https://t.me/{me.username}?start={user_id}'
+    bot.send_message(user_id, f'👥 Your Referral Link:\n{ref_link}')
 
-    if text == '⚙ ADMIN PANEL' and is_admin(user_id):
-        admin_panel(user_id)
+elif text == '🛠 SUPPORT':
+    bot.send_message(user_id, '🛠 Contact Admin: @admin')
+
+elif text == '⚙ ADMIN PANEL' and is_admin(user_id):
+    admin_panel(user_id)
 
 #=========================================================
 
