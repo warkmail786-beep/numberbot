@@ -104,9 +104,8 @@ def is_admin(user_id):
     cursor = conn.cursor()
 
     cursor.execute(
-        'SELECT user_id FROM admins WHERE
-user_id=?',
-        (user_id,)
+    'SELECT user_id FROM admins WHERE user_id=?',
+    (user_id,)
     )
 
     row = cursor.fetchone()
@@ -119,9 +118,8 @@ def get_balance(user_id):
     cursor = conn.cursor()
 
     cursor.execute(
-        'SELECT balance FROM users WHERE
-user_id=?',
-        (user_id,)
+    'SELECT balance FROM users WHERE user_id=?',
+    (user_id,)
     )
 
     row = cursor.fetchone()
