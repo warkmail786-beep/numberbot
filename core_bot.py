@@ -157,16 +157,16 @@ def get_categories():
 #=========================================================
 
 def main_keyboard(user_id):
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    markup =types.ReplyKeyboardMarkup(resize_keyboard=True)
 
-markup.row('📲 GET NUMBER', '💰 BALANCE')
-markup.row('📦 STATUS', '👥 REFER')
-markup.row('🛠 SUPPORT')
+    markup.row('📲 GET NUMBER', '💰 BALANCE')
+    markup.row('📦 STATUS', '👥 REFER')
+    markup.row('🛠 SUPPORT')
 
-if is_admin(user_id):
-    markup.row('⚙ ADMIN PANEL')
+    if is_admin(user_id):
+        markup.row('⚙ ADMIN PANEL')
 
-return markup
+    return markup
 
 #=========================================================
 
