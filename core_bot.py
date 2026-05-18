@@ -215,7 +215,7 @@ bot.send_message(user_id, msg)
 
 # ========================
 
-if text == '📲 GET NUMBER':
+elif text == '📲 GET NUMBER':
     categories = get_categories()
 
     if not categories:
