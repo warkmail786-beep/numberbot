@@ -203,7 +203,7 @@ if text == '💰 BALANCE':
     balance = get_balance(user_id)
     bot.send_message(user_id, f'💰 Your Balance: `{balance:.2f}$`')
 
-elif text == '📦 STATUS':
+if text == '📦 STATUS':
     conn = db_connect()
     cursor = conn.cursor()
 
@@ -217,11 +217,11 @@ elif text == '📦 STATUS':
     rows = cursor.fetchall()
     conn.close()
 
-    if not rows:
-        bot.send_message(user_id, '❌ No stock available')
-        return
+if not rows:
+    bot.send_message(user_id, '❌ No stock available')
+    return
 
-msg = '📦 *Available Stock*\\n\\n'
+    msg = '📦 *Available Stock*\\n\\n'
 
 for row in rows:
     msg += f'📌 {row[0]} | {row[1]} {row[2]} | {row[3]}\\n'
@@ -230,17 +230,17 @@ bot.send_message(user_id, msg)
 
 # =========================
 
-if text == '📲 GET NUMBER':
+elif text == '📲 GET NUMBER':
     categories = get_categories()
 
-    if not categories:
-        bot.send_message(user_id, '❌ No category found')
-        return
+if not categories:
+    bot.send_message(user_id, '❌ No category found')
+    return
 
     markup = types.InlineKeyboardMarkup()
 
     for cat in categories:
-        markup.add(types.InlineKeyboardButton(text=f'📌 {cat}', callback_data=f'cat_{cat}'))
+    markup.add(types.InlineKeyboardButton(text=f'📌 {cat}', callback_data=f'cat_{cat}'))
 
     bot.send_message(user_id, '📌 Select Service', reply_markup=markup)
 
