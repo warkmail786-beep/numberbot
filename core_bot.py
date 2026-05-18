@@ -240,7 +240,7 @@ if not categories:
     markup = types.InlineKeyboardMarkup()
 
     for cat in categories:
-    markup.add(types.InlineKeyboardButton(text=f'📌 {cat}', callback_data=f'cat_{cat}'))
+        markup.add(types.InlineKeyboardButton(text=f'📌 {cat}', callback_data=f'cat_{cat}'))
 
     bot.send_message(user_id, '📌 Select Service', reply_markup=markup)
 
