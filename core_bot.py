@@ -1,8 +1,7 @@
 import os
 import sqlite3
 import telebot
-from telebot
-import types
+from telebot import types
 from dotenv
 import load_dotenv
 
