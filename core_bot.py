@@ -118,14 +118,14 @@ def get_balance(user_id):
     cursor = conn.cursor()
 
     cursor.execute(
-    'SELECT balance FROM users WHERE user_id=?',
-    (user_id,)
+        'SELECT balance FROM users WHERE user_id=?',
+        (user_id,)
     )
 
     row = cursor.fetchone()
     conn.close()
 
-return row[0] if row else 0
+    return row[0] if row else 0
 
 def add_user(user_id):
     conn = db_connect()
