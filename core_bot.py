@@ -221,12 +221,12 @@ elif text == '📦 STATUS':
         bot.send_message(user_id, '❌ No stock available')
         return
 
-    msg = '📦 *Available Stock*\n\n'
+msg = '📦 *Available Stock*\n\n'
 
-    for row in rows:
-        msg += f'📌 {row[0]} | {row[1]} {row[2]} | {row[3]}\n'
+for row in rows:
+    msg += f'📌 {row[0]} | {row[1]} {row[2]} | {row[3]}\n'
 
-    bot.send_message(user_id, msg)
+bot.send_message(user_id, msg)
 
 elif text == '📲 GET NUMBER':
     categories = get_categories()
