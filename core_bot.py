@@ -174,13 +174,16 @@ return markup
 
 #=========================================================
 
-@bot.message_handler(commands=['start']) def start(message): user_id = message.from_user.id add_user(user_id)
+@bot.message_handler(commands=['start'])
+def start(message):
+    user_id = message.from_user.id
+    add_user(user_id)
 
 text = (
-    '✅ *Welcome To Number Bot*\n\n'
-    '⚡ Fast Delivery\n'
-    '🔐 Secure Numbers\n'
-    '📲 Instant Service'
+    "✅ *Welcome To Number Bot*\n\n"
+    "⚡ Fast Delivery\n"
+    "🔐 Secure Numbers\n"
+    "📲 Instant Service"
 )
 
 bot.send_message(user_id, text, reply_markup=main_keyboard(user_id))
