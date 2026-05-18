@@ -261,7 +261,8 @@ elif text == '⚙ ADMIN PANEL' and is_admin(user_id):
 
 #=========================================================
 
-def admin_panel(user_id): markup = types.InlineKeyboardMarkup(row_width=2)
+def admin_panel(user_id):
+    markup = types.InlineKeyboardMarkup(row_width=2)
 
 markup.add(
     types.InlineKeyboardButton('➕ Add Category', callback_data='add_category'),
