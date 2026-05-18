@@ -230,7 +230,7 @@ if text == '📦 STATUS':
 
 # =========================
 
-    elif text == '📲 GET NUMBER':
+    if text == '📲 GET NUMBER':
         categories = get_categories()
 
         if not categories:
