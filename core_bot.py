@@ -215,18 +215,18 @@ if text == '📦 STATUS':
     ''')
 
     rows = cursor.fetchall()
-    conn.close()
+conn.close()
 
-    if not rows:
-        bot.send_message(user_id, '❌ No stock available')
-        return
+if not rows:
+    bot.send_message(user_id, '❌ No stock available')
+    return
 
-    msg = '📦 *Available Stock*\\n\\n'
+msg = '📦 *Available Stock*\n\n'
 
-    for row in rows:
-        msg += f'📌 {row[0]} | {row[1]} {row[2]} | {row[3]}\\n'
+for row in rows:
+    msg += f'📌 {row[0]} | {row[1]} {row[2]} | {row[3]}\n'
 
-    bot.send_message(user_id, msg)
+bot.send_message(user_id, msg)
 
 # =========================
 
