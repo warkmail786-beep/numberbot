@@ -231,28 +231,37 @@ if text == '📦 STATUS':
 # =========================
 
     if text == '📲 GET NUMBER':
-    categories = get_categories()
+        categories = get_categories()
 
-    if not categories:
-        bot.send_message(user_id, '❌ No category found')
-        return
+        if not categories:
+            bot.send_message(user_id, '❌ No category found')
+            return
 
-    markup = types.InlineKeyboardMarkup()
+        markup = types.InlineKeyboardMarkup()
 
-    for cat in categories:
-        markup.add(types.InlineKeyboardButton(text=f'📌 {cat}', callback_data=f'cat_{cat}'))
+        for cat in categories:
+            markup.add(
+                types.InlineKeyboardButton(
+                    text=f'📌 {cat}',
+                    callback_data=f'cat_{cat}'
+                )
+            )
 
-    bot.send_message(user_id, '📌 Select Service', reply_markup=markup)
+        bot.send_message(
+            user_id,
+            '📌 Select Service',
+            reply_markup=markup
+        )
 
-    elif text == '👥 REFER':
+    if text == '👥 REFER':
         me = bot.get_me()
         ref_link = f'https://t.me/{me.username}?start={user_id}'
         bot.send_message(user_id, f'👥 Your Referral Link:\n{ref_link}')
 
-    elif text == '🛠 SUPPORT':
+    if text == '🛠 SUPPORT':
         bot.send_message(user_id, '🛠 Contact Admin: @admin')
 
-    elif text == '⚙ ADMIN PANEL' and is_admin(user_id):
+    if text == '⚙ ADMIN PANEL' and is_admin(user_id):
         admin_panel(user_id)
 
 #=========================================================
