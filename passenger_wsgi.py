@@ -1,0 +1,1 @@
+from core_bot import bot
