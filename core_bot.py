@@ -12,12 +12,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-BOT_TOKEN = os.getenv("BOT_TOKEN") MAIN_ADMIN_ID = int(os.getenv("MAIN_ADMIN_ID", "0")) DB_PATH = "number_bot.db"
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+MAIN_ADMIN_ID = int(os.getenv("MAIN_ADMIN_ID", "0"))
 
 if not BOT_TOKEN: raise Exception("BOT_TOKEN not found in .env")
 
 bot = telebot.TeleBot(BOT_TOKEN, parse_mode="Markdown")
-
+DB_PATH = "database.db"
 #=========================================================
 
 #DATABASE
