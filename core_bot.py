@@ -4,11 +4,11 @@ import telebot
 from telebot import types
 from dotenv import load_dotenv
 
-=========================================================
+#=========================================================
 
 LOAD ENV
 
-=========================================================
+#=========================================================
 
 load_dotenv()
 
@@ -18,11 +18,11 @@ if not BOT_TOKEN: raise Exception("BOT_TOKEN not found in .env")
 
 bot = telebot.TeleBot(BOT_TOKEN, parse_mode="Markdown")
 
-=========================================================
+#=========================================================
 
 DATABASE
 
-=========================================================
+#=========================================================
 
 def db_connect(): return sqlite3.connect(DB_PATH, check_same_thread=False)
 
@@ -85,11 +85,11 @@ conn.close()
 
 init_db()
 
-=========================================================
+#=========================================================
 
 HELPERS
 
-=========================================================
+#=========================================================
 
 def is_admin(user_id): if user_id == MAIN_ADMIN_ID: return True
 
@@ -137,11 +137,11 @@ conn.close()
 
 return [x[0] for x in rows]
 
-=========================================================
+#=========================================================
 
 MAIN KEYBOARD
 
-=========================================================
+#=========================================================
 
 def main_keyboard(user_id): markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 
@@ -154,11 +154,11 @@ if is_admin(user_id):
 
 return markup
 
-=========================================================
+#=========================================================
 
 START
 
-=========================================================
+#=========================================================
 
 @bot.message_handler(commands=['start']) def start(message): user_id = message.from_user.id add_user(user_id)
 
@@ -171,11 +171,11 @@ text = (
 
 bot.send_message(user_id, text, reply_markup=main_keyboard(user_id))
 
-=========================================================
+#=========================================================
 
 TEXT HANDLER
 
-=========================================================
+#=========================================================
 
 @bot.message_handler(func=lambda m: True) def text_handler(message): user_id = message.from_user.id text = message.text
 
@@ -233,11 +233,11 @@ elif text == '🛠 SUPPORT':
 elif text == '⚙ ADMIN PANEL' and is_admin(user_id):
     admin_panel(user_id)
 
-=========================================================
+#=========================================================
 
 ADMIN PANEL
 
-=========================================================
+#=========================================================
 
 def admin_panel(user_id): markup = types.InlineKeyboardMarkup(row_width=2)
 
@@ -250,11 +250,11 @@ markup.add(types.InlineKeyboardButton('📋 All Numbers', callback_data='all_num
 
 bot.send_message(user_id, '⚙ *Admin Panel*', reply_markup=markup)
 
-=========================================================
+#=========================================================
 
 CALLBACKS
 
-=========================================================
+#=========================================================
 
 @bot.callback_query_handler(func=lambda c: True) def callbacks(call): user_id = call.from_user.id data = call.data
 
@@ -309,11 +309,11 @@ elif data == 'add_number' and is_admin(user_id):
     msg = bot.send_message(user_id, 'Send:\ncategory,country,flag,number,rate')
     bot.register_next_step_handler(msg, process_add_number)
 
-=========================================================
+#=========================================================
 
 ADD CATEGORY
 
-=========================================================
+#=========================================================
 
 def process_add_category(message): user_id = message.from_user.id
 
@@ -335,11 +335,11 @@ except Exception as e:
 
 conn.close()
 
-=========================================================
+#=========================================================
 
 ADD NUMBER
 
-=========================================================
+#=========================================================
 
 def process_add_number(message): user_id = message.from_user.id
 
@@ -380,11 +380,11 @@ try:
 except Exception as e:
     bot.send_message(user_id, f'❌ Error: {e}')
 
-=========================================================
+#=========================================================
 
 RUN BOT
 
-=========================================================
+#=========================================================
 
 print('Bot Running...')
 bot.infinity_polling(timeout=30, long_polling_timeout=30)
