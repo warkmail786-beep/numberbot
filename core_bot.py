@@ -25,11 +25,15 @@ DB_PATH = "database.db"
 
 #=========================================================
 
-def db_connect(): return sqlite3.connect(DB_PATH, check_same_thread=False)
+def db_connect():
+    return sqlite3.connect(DB_PATH,
+check_same_thread=False)
 
-def init_db(): conn = db_connect() cursor = conn.cursor()
+def init_db():
+    conn = db_connect()
+    cursor = conn.cursor()
 
-cursor.execute('''
+    cursor.execute('''
 CREATE TABLE IF NOT EXISTS users (
     user_id INTEGER PRIMARY KEY,
     balance REAL DEFAULT 0.0,
@@ -37,14 +41,14 @@ CREATE TABLE IF NOT EXISTS users (
 )
 ''')
 
-cursor.execute('''
+    cursor.execute('''
 CREATE TABLE IF NOT EXISTS categories (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT UNIQUE
 )
 ''')
 
-cursor.execute('''
+    cursor.execute('''
 CREATE TABLE IF NOT EXISTS numbers (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     category TEXT,
@@ -57,13 +61,13 @@ CREATE TABLE IF NOT EXISTS numbers (
 )
 ''')
 
-cursor.execute('''
+    cursor.execute('''
 CREATE TABLE IF NOT EXISTS admins (
     user_id INTEGER PRIMARY KEY
 )
 ''')
 
-cursor.execute('''
+    cursor.execute('''
 CREATE TABLE IF NOT EXISTS settings (
     key TEXT PRIMARY KEY,
     value TEXT
@@ -81,8 +85,8 @@ for k, v in defaults:
         (k, v)
     )
 
-conn.commit()
-conn.close()
+    conn.commit()
+    conn.close()
 
 init_db()
 
@@ -92,51 +96,61 @@ init_db()
 
 #=========================================================
 
-def is_admin(user_id): if user_id == MAIN_ADMIN_ID: return True
+def is_admin(user_id):
+    if user_id == MAIN_ADMIN_ID:
+        return True
 
-conn = db_connect()
-cursor = conn.cursor()
+    conn = db_connect()
+    cursor = conn.cursor()
 
-cursor.execute(
-    'SELECT user_id FROM admins WHERE user_id=?',
-    (user_id,)
-)
+    cursor.execute(
+        'SELECT user_id FROM admins WHERE
+user_id=?',
+        (user_id,)
+    )
 
-row = cursor.fetchone()
-conn.close()
+    row = cursor.fetchone()
+    conn.close()
 
-return row is not None
+    return row is not None
 
-def get_balance(user_id): conn = db_connect() cursor = conn.cursor()
+def get_balance(user_id):
+    conn = db_connect()
+    cursor = conn.cursor()
 
-cursor.execute(
-    'SELECT balance FROM users WHERE user_id=?',
-    (user_id,)
-)
+    cursor.execute(
+        'SELECT balance FROM users WHERE
+user_id=?',
+        (user_id,)
+    )
 
-row = cursor.fetchone()
-conn.close()
+    row = cursor.fetchone()
+    conn.close()
 
 return row[0] if row else 0
 
-def add_user(user_id): conn = db_connect() cursor = conn.cursor()
+def add_user(user_id):
+    conn = db_connect()
+    cursor = conn.cursor()
 
-cursor.execute(
+    cursor.execute(
     'INSERT OR IGNORE INTO users (user_id) VALUES (?)',
     (user_id,)
 )
 
-conn.commit()
-conn.close()
+    conn.commit()
+    conn.close()
 
-def get_categories(): conn = db_connect() cursor = conn.cursor()
+def get_categories():
+    conn = db_connect()
+    cursor = conn.cursor()
 
-cursor.execute('SELECT name FROM categories')
-rows = cursor.fetchall()
+    cursor.execute('SELECT name FROM categories')
+    rows = cursor.fetchall()
 
-conn.close()
+    conn.close()
 
-return [x[0] for x in rows]
+    return [x[0] for x in rows]
 
 #=========================================================
 
@@ -144,7 +158,8 @@ return [x[0] for x in rows]
 
 #=========================================================
 
-def main_keyboard(user_id): markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+def main_keyboard(user_id):
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 
 markup.row('📲 GET NUMBER', '💰 BALANCE')
 markup.row('📦 STATUS', '👥 REFER')
@@ -178,7 +193,10 @@ bot.send_message(user_id, text, reply_markup=main_keyboard(user_id))
 
 #=========================================================
 
-@bot.message_handler(func=lambda m: True) def text_handler(message): user_id = message.from_user.id text = message.text
+@bot.message_handler(func=lambda m: True)
+def text_handler(message):
+    user_id = message.from_user.id
+    text = message.text
 
 if text == '💰 BALANCE':
     balance = get_balance(user_id)
@@ -257,7 +275,10 @@ bot.send_message(user_id, '⚙ *Admin Panel*', reply_markup=markup)
 
 #=========================================================
 
-@bot.callback_query_handler(func=lambda c: True) def callbacks(call): user_id = call.from_user.id data = call.data
+@bot.callback_query_handler(func=lambda c: True)
+def callbacks(call):
+    user_id = call.from_user.id
+    data = call.data
 
 if data.startswith('cat_'):
     category = data.replace('cat_', '')
@@ -316,7 +337,8 @@ elif data == 'add_number' and is_admin(user_id):
 
 #=========================================================
 
-def process_add_category(message): user_id = message.from_user.id
+def process_add_category(message):
+    user_id = message.from_user.id
 
 if not is_admin(user_id):
     return
@@ -342,7 +364,8 @@ conn.close()
 
 #=========================================================
 
-def process_add_number(message): user_id = message.from_user.id
+def process_add_number(message):
+    user_id = message.from_user.id
 
 if not is_admin(user_id):
     return
